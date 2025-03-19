@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoon Cat House with Walking Cats and Rain</title>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <a-scene>
+
+    <!-- Sky -->
+    <a-sky color="#DDDDDD"></a-sky>
+
+    <!-- Ground/Platform -->
+    <a-plane position="0 0 -10" rotation="-90 0 0" width="100" height="100" color="#7CFC00"></a-plane>
+
+    <!-- Camera with movement controls (WASD and up/down) -->
+    <a-camera position="0 1.6 10" wasd-controls="enabled: true;" look-controls="pointerLockEnabled: true"></a-camera>
+
+    <!-- Cartoon Cat House (Body) -->
+    <a-sphere position="0 4 -5" radius="6" color="#6f6e73"></a-sphere> <!-- Main Body (cat's torso) -->
+
+    <!-- Cartoon Cat Ears -->
+    <a-cone position="-4 9 -5" radius-bottom="3" height="5" color="#464648"></a-cone> <!-- Left Ear -->
+    <a-cone position="4 9 -5" radius-bottom="3" height="5" color="#464648"></a-cone> <!-- Right Ear -->
+
+    <!-- Cartoon Cat Eyes -->
+    <a-sphere position="-2 7 0" radius="1.5" color="#ffffff"></a-sphere> <!-- Left Eye -->
+    <a-sphere position="2 7 0" radius="1.5" color="#ffffff"></a-sphere> <!-- Right Eye -->
+    <a-sphere position="-2 7 -5.5" radius="0.5" color="#000000"></a-sphere> <!-- Left Pupil -->
+    <a-sphere position="2 7 -5.5" radius="0.5" color="#000000"></a-sphere> <!-- Right Pupil -->
+
+    <!-- Cartoon Cat Nose -->
+    <a-sphere position="0 5 1" radius="0.5" color="#FF6347"></a-sphere> <!-- Nose -->
+
+    <!-- Cartoon Cat Whiskers -->
+    <a-box position="-4 6 -5" width="6" height="0.1" depth="0.1" color="#464648" rotation="0 0 15"></a-box> <!-- Left Top Whisker -->
+    <a-box position="-4 5.5 -5" width="6" height="0.1" depth="0.1" color="#464648" rotation="0 0 -15"></a-box> <!-- Left Bottom Whisker -->
+    <a-box position="4 6 -5" width="6" height="0.1" depth="0.1" color="#464648" rotation="0 0 -15"></a-box> <!-- Right Top Whisker -->
+    <a-box position="4 5.5 -5" width="6" height="0.1" depth="0.1" color="#464648" rotation="0 0 15"></a-box> <!-- Right Bottom Whisker -->
+
+    <!-- Cartoon Cat Mouth -->
+    <a-entity position="0 4.5 0" geometry="primitive: cylinder; radius: 0.1; height: 0.5;" rotation="90 0 0" material="color: #000000"></a-entity> <!-- Cat Mouth -->
+
+    <!-- Cartoon Cat Tail -->
+    <a-cylinder position="0 3 -10" radius="0.4" height="7" color="#3a3648" rotation="90 0 0"></a-cylinder> <!-- Tail -->
+    <a-cylinder position="0 3 -10" radius="0.3" height="6" color="#3a3648" rotation="45 0 0"></a-cylinder> <!-- Tail Curving -->
+
+
+
+    <!-- Walking Big Cat -->
+    <a-entity id="bigCat" position="0 0.5 -10" scale="2 2 2" animation__move="property: position; to: 10 0.5 -10; dur: 5000; loop: true; dir: alternate; easing: linear;"
+      gltf-model="url(path_to_your_walking_cat_model.glb)"></a-entity>
+
+    <!-- Small Cats Walking Around the Big Cat -->
+    <a-sphere id="smallCat1" position="5 0.5 -10" radius="0.5" color="#464648"
+      animation="property: position; to: 5 0.5 -5; dur: 4000; loop: true; dir: alternate; easing: linear;"></a-sphere>
+
+    <a-sphere id="smallCat2" position="-5 0.5 -10" radius="0.5" color="#464648"
+      animation="property: position; to: -5 0.5 -5; dur: 4000; loop: true; dir: alternate; easing: linear;"></a-sphere>
+
+    <a-sphere id="smallCat3" position="3 0.5 -10" radius="0.5" color="#464648"
+      animation="property: position; to: 3 0.5 -5; dur: 4000; loop: true; dir: alternate; easing: linear;"></a-sphere>
+
+    <a-sphere id="smallCat4" position="-3 0.5 -10" radius="0.5" color="#464648"
+      animation="property: position; to: -3 0.5 -5; dur: 4000; loop: true; dir: alternate; easing: linear;"></a-sphere>
+
+    <!-- Rain (100 drops) -->
+    <a-entity id="rain">
+      <a-entity position="0 10 -5">
+        <!-- Generate 100 rain drops -->
+        <script>
+          var scene = document.querySelector('a-scene');
+          for (let i = 0; i < 100; i++) {
+            var drop = document.createElement('a-sphere');
+            drop.setAttribute('geometry', 'primitive: sphere; radius: 0.05');
+            drop.setAttribute('material', 'color: blue; opacity: 0.7');
+            drop.setAttribute('position', `${(Math.random() * 20 - 10)} ${Math.random() * 20 + 5} ${Math.random() * 20 - 10}`);
+            drop.setAttribute('animation', `property: position; to: ${drop.getAttribute('position').x} -10 ${drop.getAttribute('position').z}; dur: 3000; loop: true; easing: linear;`);
+            scene.appendChild(drop);
+          }
+        </script>
+      </a-entity>
+    </a-entity>
+
+  </a-scene>
+
+</body>
+
